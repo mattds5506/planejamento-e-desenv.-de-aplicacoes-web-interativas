@@ -1,0 +1,82 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Numeros</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+        <script src="ordenando.js"></script>
+    </head>
+    <body class="container">
+        <h1>Ordenando Valores</h1>
+        <form>
+            <label class="form label">Valor</label> <input class="form control" type="number" id="valor"/>
+            <a href="#" class="btn btn-primary m-2" onclick="add()">Adicionar</a>
+            <select class="form-select" id="escolha">
+                <option value="bubbleSort">Bubble Sort</option>
+                <option value="selectionSort">Selection Sort</option>
+                <option value="quickSort">Quick Sort</option>
+            </select>
+            <a href="#" class="btn btn-primary m-2" id="organize" onclick="ordenar()">Ordenar</a>
+            <a href="#" class="btn btn-primary m-2" id="shuffle" onclick="misturar()">Misturar</a>
+        </form>
+        <ul class="alert alert-success" id="valores"> </ul> 
+        <script>
+            
+            function add() {
+                const campoEntrada = eval(document.getElementById("valor").value);
+
+                const lista = document.getElementById("valores");
+                
+                const novoItem = document.createElement('li');
+
+                const novoNumero = document.createTextNode(campoEntrada);
+            
+                novoItem.appendChild(novoNumero);
+            
+                lista.appendChild(novoItem);
+
+            }
+
+            function ordenar() {
+                const lista = document.getElementById('valores');
+            
+                const selecao = eval(document.getElementById('escolha').selectedIndex);  
+                
+                const vetor = Array.from(lista.children, (item) => {
+                    return parseInt(item.textContent, 10);
+                
+                });
+
+                document.getElementById('organize').addEventListener('click', () => {
+                    
+                    const novoVetor = bubbleSort(vetor);
+
+                    const ordem = vetor.map(num => `<li>${num}</li>`).join('');
+
+                    document.getElementById('valores').innerHTML = ordem
+
+                });
+            }
+
+            function misturar() {
+                const lista = document.getElementById('valores'); 
+                
+                const vetor = Array.from(lista.children, (item) => {
+                    return parseInt(item.textContent, 10);
+                });
+
+                document.getElementById("shuffle").addEventListener('click', () => {
+                    const novoVetor = shuffle(vetor, 5);
+
+                    const ordem = novoVetor.map(num => `<li>${num}</li>`).join('');
+
+                    document.getElementById('valores').innerHTML = ordem
+
+                });     
+            }
+
+        </script>
+    </body>
+    </html>
